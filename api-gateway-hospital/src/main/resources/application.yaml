@@ -1,0 +1,62 @@
+server:
+  port: 6886
+
+app:
+  api-prefix: /api
+  services:
+    user: http://localhost:4040/user
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user_service
+          uri: http://localhost:4040
+          predicates:
+            - Path=${app.api-prefix}/user/**
+          filters:
+            - StripPrefix=1
+        - id: diseases_service
+          uri: http://localhost:4046
+          predicates:
+            - Path=${app.api-prefix}/disease-api/**
+          filters:
+            - StripPrefix=1
+        - id: patient_service
+          uri: http://localhost:4041
+          predicates:
+            - Path=${app.api-prefix}/patient-api/**
+          filters:
+            - StripPrefix=1
+        - id: pharmaceutical_service
+          uri: http://localhost:4044
+          predicates:
+            - Path=${app.api-prefix}/pharmaceutical-api/**
+          filters:
+            - StripPrefix=1
+        - id: employees_service
+          uri: http://localhost:4043
+          predicates:
+            - Path=${app.api-prefix}/employees-api/**
+          filters:
+            - StripPrefix=1
+        - id: doctor_service
+          uri: http://localhost:4042
+          predicates:
+            - Path=${app.api-prefix}/doctor-api/**
+          filters:
+            - StripPrefix=1
+        - id: medical_records_service
+          uri: http://localhost:4048
+          predicates:
+            - Path=${app.api-prefix}/medical-api/**
+          filters:
+            - StripPrefix=1
+        - id: appointment_service
+          uri: http://localhost:4049
+          predicates:
+            - Path=${app.api-prefix}/appointment-api/**
+          filters:
+            - StripPrefix=1
